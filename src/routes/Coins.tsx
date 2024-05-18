@@ -1,8 +1,8 @@
+import styled from "styled-components";
 import { Helmet } from "react-helmet";
 
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { fetchCoins } from "../api";
 
 const Container = styled.div`
@@ -63,7 +63,11 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-function Coins() {
+interface IRouterProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: IRouterProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
@@ -73,6 +77,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader> "Loading..."</Loader>
