@@ -63,11 +63,9 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface IRouterProps {
-  toggleDark: () => void;
-}
+interface IRouterProps {}
 
-function Coins({ toggleDark }: IRouterProps) {
+function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
@@ -77,7 +75,6 @@ function Coins({ toggleDark }: IRouterProps) {
       </Helmet>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDark}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader> "Loading..."</Loader>
