@@ -1,14 +1,19 @@
 import { atom, selector } from "recoil";
 
+export enum Categories {
+  "TO_DO",
+  "DOING",
+  "DONE",
+}
 export interface IToDo {
   text: string;
   id: number;
-  category: "DOING" | "DONE" | "TO_DO";
+  category: Categories;
 }
 
-export const categoryState = atom({
+export const categoryState = atom<Categories>({
   key: "category",
-  default: "TO_DO",
+  default: Categories.TO_DO,
 });
 
 export const toDoState = atom<IToDo[]>({
@@ -21,13 +26,7 @@ export const toDoSelector = selector({
   get: ({ get }) => {
     const toDos = get(toDoState);
     const category = get(categoryState);
-    if (category === "TO_DO")
-      return toDos.filter((toDo) => toDo.category === "DONE");
-    if (category === "DOING")
-      return toDos.filter((toDo) => toDo.category === "DOING");
-    if (category === "DONE")
-      return toDos.filter((toDo) => toDo.category === "DONE");
 
-    return;
+    return toDos.filter((toDo) => toDo.category === category);
   },
 });
